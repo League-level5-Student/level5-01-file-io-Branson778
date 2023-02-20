@@ -1,5 +1,10 @@
 package _02_File_Encrypt_Decrypt;
 
+import java.io.FileWriter;
+import java.io.IOException;
+
+import javax.swing.JOptionPane;
+
 public class FileDecryptor {
 	/*
 	 * Decryption is the process of taking encoded or encrypted text or other data
@@ -19,4 +24,25 @@ public class FileDecryptor {
 	 * Create a program that opens the file created by FileEncryptor and decrypts
 	 * the message, then display it to the user in a JOptionPane.
 	 */
+	public static void decrypt() {
+		String input = JOptionPane.showInputDialog("Insert Text To Be Decrypted");
+		char[] shift = input.toCharArray();
+		for(int i = 0; i < input.length(); i++) {
+			shift[i] = (char) (shift[i]-4);
+		}
+		String finals = "";
+		for (int i = 0; i < shift.length; i++) {
+			finals = finals+shift[i];
+		}
+		try {
+			FileWriter fw = new FileWriter("src/_02_File_Encrypt_Decrypt/decrypted.txt");
+			fw.write(finals);
+			fw.close();
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+	}
+	public static void main(String[] args) {
+		decrypt();
+	}
 }
