@@ -2,11 +2,17 @@ package _03_To_Do_List;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.io.BufferedReader;
+import java.io.FileNotFoundException;
+import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
 
 import javax.swing.JButton;
+import javax.swing.JFileChooser;
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
@@ -39,10 +45,11 @@ public class ToDoList implements ActionListener {
 	JButton remove;
 	JButton save;
 	JButton load;
-	ArrayList<String> tasks;
+	List<String> tasks;
 	public static void main(String[] args) {
 		ToDoList runner = new  ToDoList();
 		runner.setUp();
+		runner.load();
 	}
 	protected void setUp() {
 		frame = new JFrame();
@@ -92,7 +99,14 @@ public class ToDoList implements ActionListener {
 			JOptionPane.showMessageDialog(null, temp2);
 		}
 		if(e.getSource()==remove) {
-			//JOptionPane.showOptionDialog(null,"Select One Task To Remove","Removal Window",JOptionPane.DEFAULT_OPTION,JOptionPane.QUESTION_MESSAGE,null,tasks,tasks.get(0));
+			if(tasks.size()!=0) {
+			Object[] task = tasks.toArray();
+			int choice = JOptionPane.showOptionDialog(null,"Select One Task To Remove","Removal Window",JOptionPane.OK_CANCEL_OPTION,JOptionPane.QUESTION_MESSAGE,null,task,task[0].toString());
+			tasks.remove(choice);
+			}
+			else {
+				JOptionPane.showMessageDialog(null, "Error, Please Add Events To Remove");
+			}
 		}
 		if(e.getSource()==save) {
 			try {
@@ -109,6 +123,26 @@ public class ToDoList implements ActionListener {
 		
 	}
 	public void load() {
+		String path = "";
+		JFileChooser jfc = new JFileChooser();
+		int returns = jfc.showOpenDialog(null);
+		if (returns == JFileChooser.APPROVE_OPTION) {
+			path = jfc.getSelectedFile().getAbsolutePath();
+			try {
+				BufferedReader br = new BufferedReader(new FileReader(path));
+				String temp = br.readLine();
+				tasks = new ArrayList<String>(Arrays.asList(temp.substring(1, temp.length()-2).split(", ")));
+			} catch (FileNotFoundException e1) {
+				JOptionPane.showMessageDialog(null, "Error Finding Save File/nPlease Try Saving Events Again");
+				e1.printStackTrace();
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
+		}
+		else {
+			JOptionPane.showMessageDialog(null, "Cancelled File Path Selection\nPlease Try Again");
+			
+		}
 		
 	}
 }

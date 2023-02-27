@@ -1,6 +1,9 @@
 package _04_Directory_Iteration;
 
 import java.io.File;
+import java.io.FileWriter;
+import java.io.IOException;
+import java.util.Iterator;
 
 import javax.swing.JFileChooser;
 
@@ -29,5 +32,21 @@ public class DirectoryIterator {
 		 * Be aware of possible directories inside of directories.
 		 * (e.g //Copyright © 2019 FirstName LastName)
 		 */
+		JFileChooser jfc2 = new JFileChooser();
+		jfc.setFileSelectionMode(JFileChooser.FILES_AND_DIRECTORIES);
+		int returns = jfc2.showOpenDialog(null);
+		if(returns == JFileChooser.APPROVE_OPTION) {
+			File directory2 = jfc.getSelectedFile();
+			File[] directories = directory2.listFiles();
+			if(directories != null) {
+				for (File file : directories) {
+					try {
+						FileWriter fr = new FileWriter(directory2,true);
+					} catch (IOException e) {
+						e.printStackTrace();
+					}
+				}
+			}
+		}
 	}
 }
