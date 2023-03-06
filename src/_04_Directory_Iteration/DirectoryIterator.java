@@ -8,6 +8,7 @@ import java.util.Iterator;
 import javax.swing.JFileChooser;
 
 public class DirectoryIterator {
+	protected static int returns;
 	public static void main(String[] args) {
 		/* 
 		 * The following is an example of how to list all of the files in a directory.
@@ -32,21 +33,35 @@ public class DirectoryIterator {
 		 * Be aware of possible directories inside of directories.
 		 * (e.g //Copyright © 2019 FirstName LastName)
 		 */
+		DirectoryIterator runner = new DirectoryIterator();
 		JFileChooser jfc2 = new JFileChooser();
-		jfc.setFileSelectionMode(JFileChooser.FILES_AND_DIRECTORIES);
-		int returns = jfc2.showOpenDialog(null);
+		jfc2.setFileSelectionMode(JFileChooser.FILES_AND_DIRECTORIES);
+		returns = jfc2.showOpenDialog(null);
 		if(returns == JFileChooser.APPROVE_OPTION) {
-			File directory2 = jfc.getSelectedFile();
-			File[] directories = directory2.listFiles();
-			if(directories != null) {
-				for (File file : directories) {
-					try {
-						FileWriter fr = new FileWriter(directory2,true);
-					} catch (IOException e) {
-						e.printStackTrace();
+		runner.recursiveCopyright(jfc2.getSelectedFile());
+		}
+	}
+	public void recursiveCopyright(File direct) {
+		File directory2 = direct;
+		File[] directories = directory2.listFiles();
+		if(directories != null) {
+			for (File file : directories) {
+				if(!file.isDirectory()) {
+				try {
+					if(file.getName().contains(".java")) {
+					FileWriter fr = new FileWriter(directory2,true);
+					fr.write("Copyright © 2023 Branson Boock");
+					System.out.println(file.getAbsolutePath());
+					fr.close();
 					}
+				} catch (IOException e) {
+					e.printStackTrace();
+				}
+			}
+				else {
+					recursiveCopyright(file);
 				}
 			}
 		}
-	}
+}
 }
