@@ -59,6 +59,7 @@ public class ColorSelectionPanel extends JPanel implements MouseListener, Change
         
         saveB = new JButton();
         saveB.addActionListener(this);
+        saveB.setVisible(true);
         saveB.setText("Save Drawing");
 
         colorLabel = new JLabel();
@@ -79,6 +80,7 @@ public class ColorSelectionPanel extends JPanel implements MouseListener, Change
         add(gSlider);
         add(new JLabel("blue"));
         add(bSlider);
+        add(saveB);
     }
 
     public Color getSelectedColor() {
@@ -134,7 +136,7 @@ public class ColorSelectionPanel extends JPanel implements MouseListener, Change
         add(colorLabel);
     }
     public void saveButtonAction() {
-    	
+    	PixelArtMaker.saveTic = true;
     }
 
 	@Override

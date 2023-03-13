@@ -10,12 +10,12 @@ import javax.swing.JPanel;
 public class GridPanel extends JPanel implements Serializable{
 
     private static final long serialVersionUID = 1L;
-    private int windowWidth;
-    private int windowHeight;
+    int windowWidth;
+    int windowHeight;
     private int pixelWidth;
     private int pixelHeight;
-    private int rows;
-    private int cols;
+    int rows;
+    int cols;
 
     // 1. Create a 2D array of pixels. Do not initialize it yet.
 Pixel[][] pixelss;
